@@ -1,9 +1,16 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
+        stage('Download') {
             steps {
                 sh 'echo Done'
+            }
+        }
+        stage('SSH to remote server') {
+            steps {
+                sshagent(['SSH-Cred']) {
+                    sh 'ssh root@161.97.136.69 "git clone https://github.com/MohamedGamal10/CICD.git"'
+                }
             }
         }
     }
