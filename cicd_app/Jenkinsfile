@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/myusername/myrepo.git']]])
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t myimage:latest .'
+            }
+        }
+        stage('Run Docker Image') {
+            steps {
+                sh 'docker run -p 80:80 myimage:latest'
+            }
+        }
+    }
+    post {
+        always {
+            cleanWs()
+        }
+        success {
+            echo 'Build successful!'
+        }
+        failure {
+            echo 'Build failed!'
+        }
+    }
+}
