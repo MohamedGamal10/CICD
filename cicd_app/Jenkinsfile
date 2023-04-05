@@ -6,14 +6,19 @@ pipeline {
                 sh 'echo Done'
             }
         }
-        stage('SSH to remote server') {
+        stage('SSH to remote server and execute command') {
             steps {
-                sshagent(['SSH-Cred']) {
-                    sh 'ssh root@161.97.136.69 "git clone https://github.com/MohamedGamal10/CICD.git"'
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE', passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
+                    sshScript remote: [
+                        host: env.REMOTE_HOST,
+                        port: env.REMOTE_PORT.toInteger(),
+                        user: env.SSH_USERNAME,
+                        keyPath: env.SSH_KEYFILE,
+                        passphrase: env.SSH_PASSPHRASE
+                    ], script: 'ls -al'
                 }
             }
         }
-    }
     post {
         always {
             cleanWs()
@@ -25,4 +30,5 @@ pipeline {
             echo 'Build failed!'
         }
     }
+}
 }
