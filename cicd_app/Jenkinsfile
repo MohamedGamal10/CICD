@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Download') {
             steps {
-                sh 'echo Done'
+                sh 'echo Done2'
             }
         }
         stage('SSH to remote server and execute command') {
