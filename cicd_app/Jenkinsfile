@@ -22,7 +22,7 @@ pipeline {
     }
     post {
         always {
-            cleanWs()
+            //cleanWs()
         }
         success {
             echo 'Build successful!'
