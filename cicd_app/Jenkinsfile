@@ -1,18 +1,14 @@
 pipeline {
     agent any
     stages {
-        stage('Download') {
+        stage('SSH to remote server and execute command') {
             steps {
-                sh 'echo Done2'
-            }
-        }
-         stage('SSH to remote server and execute command') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE', passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
+                                                    passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
                     sshScript remote: [
                         host: env.REMOTE_HOST,
                         port: env.REMOTE_PORT.toInteger(),
-                        user: "${SSH_USERNAME}"
+                        user: "${SSH_USERNAME}",
                         keyPath: "${SSH_KEYFILE}",
                         passphrase: "${SSH_PASSPHRASE}"
                     ], script: 'ls -al'
