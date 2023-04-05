@@ -5,6 +5,7 @@ pipeline {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
+                    echo "Done"
                     echo "${SSH_PASSPHRASE}"
                     sshScript remote: [
                         host: env.REMOTE_HOST,
