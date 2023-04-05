@@ -19,6 +19,7 @@ pipeline {
                 }
             }
         }
+    }
     post {
         always {
             cleanWs()
@@ -30,5 +31,4 @@ pipeline {
             echo 'Build failed!'
         }
     }
-}
 }
