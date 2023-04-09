@@ -4,14 +4,13 @@ pipeline {
         stage('SSH') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
-                                                    passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
+                                                    usernameVariable: 'SSH_USERNAME')]) {
 
                     sshScript remote: [
                         host: env.REMOTE_HOST,
                         port: env.REMOTE_PORT,
                         user: "${SSH_USERNAME}",
                         keyPath: "${SSH_KEYFILE}",
-                        passphrase: "${SSH_PASSPHRASE}",
                         returnStdout: true
                     ], script: """
                         ls -al
