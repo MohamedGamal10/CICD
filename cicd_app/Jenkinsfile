@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('SSH2') {
+        stage('SSH') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
@@ -22,9 +22,7 @@ pipeline {
         }
     }
     post {
-        always {
-            cleanWs()
-        }
+
         success {
             echo 'Build successful!'
         }
