@@ -6,9 +6,9 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
                     sshScript remote: [
-                        host: env.REMOTE_HOST,
-                        port: env.REMOTE_PORT.toInteger(),
-                        user: "${SSH_USERNAME}",
+                        host: "161.97.136.69",
+                        port: "22",
+                        user: "root",
                         keyPath: "${SSH_KEYFILE}",
                         passphrase: "${SSH_PASSPHRASE}"
                     ], script: """
@@ -19,21 +19,6 @@ pipeline {
             }
         }
 
-        stage('SSH and execute command2') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                    script {
-                        def remote = [:]
-                        remote.host = '161.97.136.69'
-                        remote.user = 'root'
-                        remote.allowAnyHosts = true
-                        remote.identityFile = SSH_PRIVATE_KEY
-
-                        sshCommand remote: remote, command: 'ls -al'
-                    }
-                }
-            }
-        }
     }
     post {
         always {
