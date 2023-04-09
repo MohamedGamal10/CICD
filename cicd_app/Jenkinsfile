@@ -11,7 +11,8 @@ pipeline {
                         port: env.REMOTE_PORT,
                         user: "${SSH_USERNAME}",
                         keyPath: "${SSH_KEYFILE}",
-                        passphrase: "${SSH_PASSPHRASE}"
+                        passphrase: "${SSH_PASSPHRASE}",
+                        returnStdout: true
                     ], script: """
                         ls -al
                         pwd
