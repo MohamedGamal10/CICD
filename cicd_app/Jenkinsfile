@@ -9,8 +9,8 @@ pipeline {
                         host: "161.97.136.69",
                         port: "22",
                         user: "root",
-                        keyPath: env.SSH_KEYFILE,
-                        passphrase: env.SSH_PASSPHRASE
+                        keyPath: "$SSH_KEYFILE",
+                        passphrase: "$SSH_PASSPHRASE"
                     ], script: """
                         ls -al
                         pwd
