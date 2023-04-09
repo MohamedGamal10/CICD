@@ -1,24 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('SSH') {
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
-                                                    usernameVariable: 'SSH_USERNAME')]) {
-
-                    sshScript remote: [
-                        host: env.REMOTE_HOST,
-                        port: env.REMOTE_PORT,
-                        user: "${SSH_USERNAME}",
-                        keyPath: "${SSH_KEYFILE}",
-                        returnStdout: true
-                    ], script: """
-                        ls -al
-                        pwd
-                    """
-                }
-            }
-        }
         stage('login server'){
          steps{
             sshagent(credentials:['ssh-credentials-id']){
