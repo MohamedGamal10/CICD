@@ -1,12 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('SSH to remote server and execute command') {
+        stage('SSH to remote server and execute command1') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
-                    echo "Done"
-                    echo "${SSH_PASSPHRASE}"
                     sshScript remote: [
                         host: env.REMOTE_HOST,
                         port: env.REMOTE_PORT.toInteger(),
@@ -17,6 +15,22 @@ pipeline {
                         ls -al
                         pwd
                     """
+                }
+            }
+        }
+
+        stage('SSH and execute command2') {
+            steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                    script {
+                        def remote = [:]
+                        remote.host = '161.97.136.69'
+                        remote.user = 'root'
+                        remote.allowAnyHosts = true
+                        remote.identityFile = SSH_PRIVATE_KEY
+
+                        sshCommand remote: remote, command: 'ls -al'
+                    }
                 }
             }
         }
