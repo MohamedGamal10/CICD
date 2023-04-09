@@ -16,7 +16,6 @@ pipeline {
                     ], script: """
                         ls -al
                         pwd
-                        echo "Hello, world!"
                     """
                 }
             }
