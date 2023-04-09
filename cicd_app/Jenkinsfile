@@ -1,6 +1,15 @@
 pipeline {
     agent any
     stages {
+         stage('Deploy') {
+            steps {
+                sshagent(['ssh-credentials-id']) {
+                    sh "ssh root@161.97.136.69 'ls -al'"
+                    sh "ssh root@161.97.136.69 'echo Hello World'"
+                }
+            }
+        }
+
         stage('SSH to remote server and execute command1') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
