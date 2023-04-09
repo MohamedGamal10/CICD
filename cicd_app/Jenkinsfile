@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('SSHd') {
+        stage('SSH') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
@@ -20,9 +20,19 @@ pipeline {
                 }
             }
         }
+        stage('login server'){
+         steps{
+            sshagent(credentials:['ssh-credentials-id']){
+               sh 'ssh  -o StrictHostKeyChecking=no  root@161.97.136.69 uptime "whoami"'
+          }
+        echo "success lgoin"
+         }
+       }
     }
     post {
-
+        always {
+            cleanWs()
+        }
         success {
             echo 'Build successful!'
         }
