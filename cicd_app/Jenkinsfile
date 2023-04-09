@@ -8,7 +8,7 @@ pipeline {
                     echo "Done"
                     echo "${SSH_USERNAME}"
                     echo env.REMOTE_HOST
-                    echo env.REMOTE_PORT.toInteger()
+                    echo env.REMOTE_PORT
                     echo "${SSH_KEYFILE}"
                     echo "${SSH_PASSPHRASE}"
 
