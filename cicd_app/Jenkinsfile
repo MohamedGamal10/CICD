@@ -1,25 +1,23 @@
 pipeline {
     agent any
     stages {
-         stage('Deploy') {
-            steps {
-                sshagent(['ssh-credentials-id']) {
-                    sh "ssh root@161.97.136.69 'ls -al'"
-                    sh "ssh root@161.97.136.69 'echo Hello World'"
-                }
-            }
-        }
-
-        stage('SSH to remote server and execute command1') {
+        stage('SSH to remote server and execute command') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
+                    echo "Done"
+                    echo "${SSH_USERNAME}"
+                    echo env.REMOTE_HOST
+                    echo env.REMOTE_PORT.toInteger()
+                    echo "${SSH_KEYFILE}"
+                    echo "${SSH_PASSPHRASE}"
+
                     sshScript remote: [
-                        host: "161.97.136.69",
-                        port: "22",
-                        user: "root",
-                        keyPath: "$SSH_KEYFILE",
-                        passphrase: "$SSH_PASSPHRASE"
+                        host: env.REMOTE_HOST,
+                        port: env.REMOTE_PORT.toInteger(),
+                        user: "${SSH_USERNAME}",
+                        keyPath: "${SSH_KEYFILE}",
+                        passphrase: "${SSH_PASSPHRASE}"
                     ], script: """
                         ls -al
                         pwd
@@ -27,7 +25,6 @@ pipeline {
                 }
             }
         }
-
     }
     post {
         always {
