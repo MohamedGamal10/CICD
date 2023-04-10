@@ -8,7 +8,7 @@ pipeline {
 
                     script 
                         {
-                            sh """ssh -tt ${SSH_USERNAME}@${REMOTE_HOST} << EOF 
+                            sh """ssh -tt ${SSH_USERNAME}@${REMOTE_HOST} - y<< EOF 
                                 ls -al
                                 pwd
                             exit
