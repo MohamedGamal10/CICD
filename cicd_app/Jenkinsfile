@@ -9,7 +9,7 @@ agent any
               configName: 'remote',
               transfers: [
                 sshTransfer(
-                  execCommand: 'ls -al',
+                  execCommand: 'ls -al /root',
                 )
               ]
             )
