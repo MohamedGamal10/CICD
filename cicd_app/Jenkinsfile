@@ -14,7 +14,7 @@ pipeline {
                         passphrase: "${SSH_PASSPHRASE}",
                         returnStdout: true
                     ], script: """
-                        ls -l
+                        ls -al
                         pwd
                     """
                 }
