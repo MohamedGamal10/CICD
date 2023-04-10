@@ -8,7 +8,7 @@ agent any
             sshPublisherDesc(
               configName: 'remote',
               transfers: [
-                sshTransfer(execCommand: 'mkdir /root/Mohamed')
+                sshTransfer(execCommand: 'mkdir /root/Mohamed'),
                 sshTransfer(execCommand: 'mkdir /root/Mohamed/Ahmed')
               ]
             )
