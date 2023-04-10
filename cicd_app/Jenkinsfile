@@ -8,7 +8,7 @@ pipeline {
 
                     script {
                         sh """
-                        ssh -i ${SSH_KEYFILE} ${SSH_USERNAME}@${REMOTE_HOST} << EOF
+                        ssh -o "StrictHostKeyChecking=no" -o "PasswordAuthentication=yes" -o "PreferredAuthentications=password" -o "PubkeyAuthentication=no" ${SSH_USERNAME}@${REMOTE_HOST} << EOF
                             ls -l
                             pwd
                             exit 0
