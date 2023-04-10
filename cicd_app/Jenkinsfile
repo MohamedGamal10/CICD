@@ -8,8 +8,7 @@ pipeline {
 
                     script {
                         sh """
-                        #!/bin/bash
-                        sudo ssh -i ${SSH_KEYFILE} ${SSH_USERNAME}@${REMOTE_HOST} << EOF
+                        ssh -i ${SSH_KEYFILE} ${SSH_USERNAME}@${REMOTE_HOST} << EOF
                             ls -l
                             pwd
                             exit 0
