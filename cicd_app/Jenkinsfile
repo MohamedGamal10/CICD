@@ -9,8 +9,10 @@ agent any
               configName: 'remote',
               transfers: [
                 sshTransfer(
-                  execCommand: 'mkdir /root/Mohamed',
-                  execCommand: 'mkdir /root/Mohamed/Ahmed'
+                  execCommand: """
+                  mkdir /root/Mohamed
+                  mkdir /root/Mohamed/Ahmed'
+                  """
                 )
               ]
             )
