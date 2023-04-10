@@ -10,6 +10,7 @@ agent any
               transfers: [
                 sshTransfer(
                   execCommand: 'ls -al /root',
+                  printExecOutput: true
                 )
               ]
             )
