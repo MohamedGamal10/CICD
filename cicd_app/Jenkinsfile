@@ -6,19 +6,14 @@ pipeline {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
 
-                    node {
-                        def remote = [:]
-                        remote.name = 'test'
-                        remote.host = env.REMOTE_HOST
-                        remote.port = env.REMOTE_PORT
-                        remote.user = "${SSH_USERNAME}"
-                        remote.password = '3237258mM'
-                        remote.allowAnyHosts = true
-                        stage('Remote SSH') {
-                            sshCommand remote: remote, command: "ls -al"
-                            sshCommand remote: remote, command: "pwd"
+                    script 
+                        {
+                            sh """ssh -tt ${SSH_USERNAME}@${REMOTE_HOST} << EOF 
+                                ls -al
+                                pwd
+                            exit
+                            EOF"""
                         }
-                    }
                 }
             }
         }
