@@ -1,24 +1,30 @@
 pipeline {
-    agent any
+    agent {
+    docker {
+      image 'jenkins/jenkins:lts'
+      args '-p 8080:8080'
+    }
+    }
     stages {
         stage('SSH') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-credentials-id', keyFileVariable: 'SSH_KEYFILE',
                                                     passphraseVariable: 'SSH_PASSPHRASE', usernameVariable: 'SSH_USERNAME')]) {
 
-                    script {
-                        sh """
-                         spawn ssh  ${SSH_USERNAME}@${REMOTE_HOST} expect "password: " send "$3237258mM\r"<< EOF
-                            ls -l
-                            pwd
-                            exit
-                        << EOF
-                        """
-                }
+                    sshScript remote: [
+                        host: env.REMOTE_HOST,
+                        port: env.REMOTE_PORT,
+                        user: "${SSH_USERNAME}",
+                        keyPath: "${SSH_KEYFILE}",
+                        passphrase: "${SSH_PASSPHRASE}",
+                        returnStdout: true
+                    ], script: """
+                        ls -al
+                        pwd
+                    """
                 }
             }
         }
-
     }
     post {
         always {
