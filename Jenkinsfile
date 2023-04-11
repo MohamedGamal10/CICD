@@ -7,10 +7,10 @@ agent any
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
-                sshTransfer(execCommand: "docker stop app"),
-                sshTransfer(execCommand: "docker rm app"),
-                sshTransfer(execCommand: "docker rmi react_app:1.0"),
-                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
+                sshTransfer(execCommand: "docker stop app",continueOnError: true),
+                sshTransfer(execCommand: "docker rm app",continueOnError: true),
+                sshTransfer(execCommand: "docker rmi react_app:1.0",continueOnError: true),
+                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0",continueOnError: true),
               ]
             )
           ]
@@ -23,7 +23,7 @@ agent any
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
-                sshTransfer(execCommand: "docker run --name app -p 80:80 -d react_app:1.0"),
+                sshTransfer(execCommand: "docker run --name app -p 80:80 -d react_app:1.0",continueOnError: true),
               ]
             )
           ]
