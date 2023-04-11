@@ -1,18 +1,27 @@
 pipeline {
 agent any
   stages {
-    stage('SSH') {
+    stage('Download App') {
       steps {
-        sshPublisher(
-          continueOnError: true,
-          failOnError: true,
+        sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
-            sshPublisherDesc(
-              configName: 'remote',
-              verbose: true,
+            sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
-                sshTransfer(execCommand: 'git clone https://github.com/MohamedGamal10/CICD.git'),
-                sshTransfer(execCommand: 'pwd')
+                sshTransfer(execCommand: "git clone https://github.com/MohamedGamal10/CICD.git")
+              ]
+            )
+          ]
+        )
+      }
+    }
+    stage('Build Docker image') {
+      steps {
+        sshPublisher(continueOnError: true, failOnError: true,
+          publishers: [
+            sshPublisherDesc(configName: 'remote',verbose: true,
+              transfers: [
+                sshTransfer(execCommand: "cd /root/CICD/cicd_app"),
+                sshTransfer(execCommand: "docker build --tag react_app ."),
               ]
             )
           ]
