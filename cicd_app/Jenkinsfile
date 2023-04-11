@@ -7,6 +7,7 @@ agent any
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
+                sshTransfer(execCommand: "rm -r /root/CICD"),
                 sshTransfer(execCommand: "git clone https://github.com/MohamedGamal10/CICD.git")
               ]
             )
