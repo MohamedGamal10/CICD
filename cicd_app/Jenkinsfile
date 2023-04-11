@@ -22,6 +22,7 @@ agent any
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
                 sshTransfer(execCommand: "cd /root/CICD/cicd_app"),
+                sshTransfer(execCommand: "pwd"),
                 sshTransfer(execCommand: "docker build --tag react_app ."),
               ]
             )
