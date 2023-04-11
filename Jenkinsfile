@@ -14,7 +14,7 @@ agent any
         )
       }
     }
-    stage('Docker Run Container1') {
+    stage('Docker Run Container') {
       steps {
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
