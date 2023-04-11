@@ -11,7 +11,7 @@ agent any
               configName: 'remote',
               verbose: true,
               transfers: [
-                sshTransfer(execCommand: 'ls -al /root'),
+                sshTransfer(execCommand: 'git clone https://github.com/MohamedGamal10/CICD.git'),
                 sshTransfer(execCommand: 'pwd')
               ]
             )
