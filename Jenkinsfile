@@ -3,6 +3,15 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
+        catchError {
+                    sshPublisher(continueOnError: true, failOnError: true,
+                    publishers: [
+                      sshPublisherDesc(configName: 'remote',verbose: true,
+                        transfers: [
+                          sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
+                        ])
+                    ])
+                }
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
@@ -14,23 +23,8 @@ agent any
               ])
           ]) 
       }
-      post { failure {build job: 'recovery', propagate: true, wait: false}}
+  
 
-    }
-
-    stage('recovery') {
-      when { expression { currentBuild.result == 'FAILURE' }}
-      steps {
-        sshPublisher(continueOnError: true, failOnError: true,
-          publishers: [
-            sshPublisherDesc(configName: 'remote',verbose: true,
-              transfers: [
-                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
-              ])
-          ])
-          
-      }
-      
     }
 
     stage('Docker Run Container') {
