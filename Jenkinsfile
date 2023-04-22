@@ -3,6 +3,7 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
+        script {
         try{
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
@@ -15,7 +16,7 @@ agent any
               ])
           ]) 
         }
-        catch(err){
+        catch(Exception  err){
                   sshPublisher(continueOnError: true, failOnError: true,
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
@@ -27,6 +28,7 @@ agent any
         }
       }
     }
+  }
 
     stage('Docker Run Container') {
       steps {
