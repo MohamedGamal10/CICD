@@ -12,11 +12,12 @@ agent any
                 sshTransfer(execCommand: "docker rmi react_app:1.0"),
                 sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
               ])
-          ])
-          
+          ]) 
       }
+      post { failure {build job: 'Build Docker image Step', propagate: true, wait: false}}
 
     }
+
     stage('Build Docker image Step') {
       when { expression { currentBuild.result == 'FAILURE' }}
       steps {
@@ -31,6 +32,7 @@ agent any
       }
       
     }
+    
     stage('Docker Run Container') {
       steps {
         sshPublisher(continueOnError: true, failOnError: true,
