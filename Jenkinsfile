@@ -1,7 +1,7 @@
 pipeline {
 agent any
   stages {
-    stage('Build Docker image check') {
+    stage('Build Docker image') {
       steps {
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
@@ -14,11 +14,11 @@ agent any
               ])
           ]) 
       }
-      post { failure {build job: 'Build Docker image Step', propagate: true, wait: false}}
+      post { failure {build job: 'recovery', propagate: true, wait: false}}
 
     }
 
-    stage('Build Docker image Step') {
+    stage('recovery') {
       when { expression { currentBuild.result == 'FAILURE' }}
       steps {
         sshPublisher(continueOnError: true, failOnError: true,
@@ -32,7 +32,7 @@ agent any
       }
       
     }
-    
+
     stage('Docker Run Container') {
       steps {
         sshPublisher(continueOnError: true, failOnError: true,
