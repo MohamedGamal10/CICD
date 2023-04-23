@@ -18,6 +18,7 @@ agent any
     }
     stage('Docker Run Container') {
       steps {
+        currentBuild.result = 'SUCCESS'
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
