@@ -18,18 +18,6 @@ pipeline {
                           ]
                         )
                     } catch (Exception ex) {
-                            echo "Ahmed Build failed: ${ex.getMessage()}"
-                            currentBuild.result = 'FAILURE'
-                            error("Build failed: ${ex.getMessage()}")
-                    }
-                }
-            }
-        }
-
-        stage('Build Docker image 2') {
-            steps {
-               when {expression { currentBuild.result = 'FAILURE' }}
-                script {
                         sshPublisher(continueOnError: true, failOnError: true,
                           publishers: [
                             sshPublisherDesc(configName: 'remote', verbose: true,
@@ -39,11 +27,11 @@ pipeline {
                             )
                           ]
                         )
-                
+
+                    }
                 }
             }
         }
-
         stage('Docker Run Container') {
             steps {
                 script {
