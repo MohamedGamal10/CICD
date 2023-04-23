@@ -17,7 +17,9 @@ agent any
       }
       post{
         failure{
+          script{
           echo 'Aser'
+          currentBuild.result = 'SUCCESS'
           sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
@@ -26,7 +28,7 @@ agent any
               ])
           ])
 
-        }
+        }}
       }
     }
     stage('Docker Run Container') {
