@@ -3,7 +3,7 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
-        try{
+        try {
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
