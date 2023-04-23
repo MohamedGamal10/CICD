@@ -15,6 +15,11 @@ agent any
           ])
           
       }
+      post{
+        failure{
+          echo 'Aser'
+        }
+      }
     }
     stage('Docker Run Container') {
       steps {
