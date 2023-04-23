@@ -15,7 +15,7 @@ agent any
           ])
 
            if (currentBuild.result == 'FAILURE') {
-            script {
+            steps {
                 sshPublisher(continueOnError: true, failOnError: true,
                 publishers: [
                   sshPublisherDesc(configName: 'remote',verbose: true,
