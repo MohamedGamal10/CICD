@@ -18,7 +18,9 @@ pipeline {
                           ]
                         )
                     } catch (Exception ex) {
-                        echo "Mohamed"
+                            echo "Ahmed Build failed: ${ex.getMessage()}"
+                            currentBuild.result = 'FAILURE'
+                            error("Build failed: ${ex.getMessage()}")
                     }
                 }
             }
