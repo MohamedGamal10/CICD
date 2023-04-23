@@ -5,7 +5,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sshPublisher(continueOnError: true, failOnError: true,
+                        sshPublisher(returnStatus: true,
                           publishers: [
                             sshPublisherDesc(configName: 'remote', verbose: true,
                               transfers: [
@@ -18,7 +18,7 @@ pipeline {
                           ]
                         )
                     } catch (Exception ex) {
-                        sshPublisher(continueOnError: true, failOnError: true,
+                        sshPublisher(returnStatus: true,
                           publishers: [
                             sshPublisherDesc(configName: 'remote', verbose: true,
                               transfers: [
@@ -27,14 +27,15 @@ pipeline {
                             )
                           ]
                         )
+
                     }
-                  } // added missing curly brace
                 }
             }
+        }
         stage('Docker Run Container') {
             steps {
                 script {
-                    sshPublisher(continueOnError: true, failOnError: true,
+                    sshPublisher(returnStatus: true,
                       publishers: [
                         sshPublisherDesc(configName: 'remote', verbose: true,
                           transfers: [
