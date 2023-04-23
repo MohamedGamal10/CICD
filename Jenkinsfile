@@ -4,6 +4,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
+                  try{
                     sshPublisher(publishers: [
                         sshPublisherDesc(configName: 'remote', verbose: true,
                             transfers: [
@@ -14,6 +15,9 @@ pipeline {
                             ]
                         )
                     ])
+                    }catch (Execption ex){
+                      currentBuild.result ='FAILURE'
+                    }
                     
                     // Check the exit status of the previous step
                     if (currentBuild.result == 'FAILURE') {
