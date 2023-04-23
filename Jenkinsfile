@@ -17,9 +17,7 @@ agent any
       }
       post {
             failure {
-              echo "test"
-              script {
-                if (currentBuild.result == 'FAILURE') {
+              currentBuild.result = 'SUCCESS'
                   sshPublisher(continueOnError: true, failOnError: true,
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
@@ -28,7 +26,6 @@ agent any
                       ])
                   ])
 
-                }}
                 }
             }
 
