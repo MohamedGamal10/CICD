@@ -18,6 +18,7 @@ agent any
     }
     stage('Docker Run Container') {
       steps {
+        script{
         currentBuild.result = 'SUCCESS'
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
@@ -28,7 +29,7 @@ agent any
             )
           ]
         )
-      }
+      }}
     }
   }
     post {
