@@ -15,7 +15,6 @@ agent any
           ])
 
            if (currentBuild.result == 'FAILURE') {
-            steps {
                 sshPublisher(continueOnError: true, failOnError: true,
                 publishers: [
                   sshPublisherDesc(configName: 'remote',verbose: true,
@@ -23,8 +22,6 @@ agent any
                       sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
                     ])
                 ])
-
-            }
            }
           
       }
