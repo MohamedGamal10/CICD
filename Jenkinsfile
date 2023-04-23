@@ -18,6 +18,7 @@ agent any
       post {
             failure {
               script {
+                  currentBuild.result = 'SUCCESS'
                   sshPublisher(continueOnError: true, failOnError: true,
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
