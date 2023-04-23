@@ -27,11 +27,10 @@ pipeline {
                             )
                           ]
                         )
-
                     }
+                  } // added missing curly brace
                 }
             }
-        }
         stage('Docker Run Container') {
             steps {
                 script {
