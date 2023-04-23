@@ -3,7 +3,7 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
-        sshPublisher(continueOnError: true, failOnError: true,
+        sshPublisher(
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
@@ -18,8 +18,7 @@ agent any
       post {
             failure {
               script {
-                  currentBuild.result = 'SUCCESS'
-                  sshPublisher(continueOnError: true, failOnError: true,
+                  sshPublisher(
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
                       transfers: [
@@ -34,7 +33,7 @@ agent any
     }
     stage('Docker Run Container') {
       steps {
-        sshPublisher(continueOnError: true, failOnError: true,
+        sshPublisher(
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
