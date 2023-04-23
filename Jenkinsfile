@@ -4,26 +4,23 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    sshPublisher(publishers: [
-                        sshPublisherDesc(configName: 'remote', verbose: true,
-                            transfers: [
+                    try {
+                        sshPublisher(continueOnError: true, failOnError: true,
+                          publishers: [
+                            sshPublisherDesc(configName: 'remote', verbose: true,
+                              transfers: [
                                 sshTransfer(execCommand: "docker stop app"),
                                 sshTransfer(execCommand: "docker rm app"),
                                 sshTransfer(execCommand: "docker rmi react_app:1.0"),
                                 sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
-                            ]
-                        )
-                    ])
-                    
-                    // Check the exit status of the previous step
-                    if (currentBuild.result == 'FAILURE') {
-                        sshPublisher(publishers: [
-                            sshPublisherDesc(configName: 'remote', verbose: true,
-                                transfers: [
-                                    sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
-                                ]
+                              ]
                             )
-                        ])
+                          ]
+                        )
+                    } catch (Exception ex) {
+                            echo "Ahmed Build failed: ${ex.getMessage()}"
+                            currentBuild.result = 'FAILURE'
+                            error("Build failed: ${ex.getMessage()}")
                     }
                 }
             }
@@ -31,13 +28,15 @@ pipeline {
         stage('Docker Run Container') {
             steps {
                 script {
-                    sshPublisher(publishers: [
+                    sshPublisher(continueOnError: true, failOnError: true,
+                      publishers: [
                         sshPublisherDesc(configName: 'remote', verbose: true,
-                            transfers: [
-                                sshTransfer(execCommand: "docker run --name app -p 80:80 -d react_app:1.0"),
-                            ]
+                          transfers: [
+                            sshTransfer(execCommand: "docker run --name app -p 80:80 -d react_app:1.0"),
+                          ]
                         )
-                    ])
+                      ]
+                    )
                 }
             }
         }
