@@ -17,6 +17,7 @@ agent any
       }
       post {
             failure {
+              echo "test"
               script {
                 if (currentBuild.result == 'FAILURE') {
                   sshPublisher(continueOnError: true, failOnError: true,
