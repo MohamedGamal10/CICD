@@ -18,7 +18,6 @@ agent any
       post {
             failure {
               script {
-                if (currentBuild.result == 'FAILURE') {
                   sshPublisher(continueOnError: true, failOnError: true,
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
@@ -27,7 +26,7 @@ agent any
                       ])
                   ])
 
-                }}
+                }
                 }
             }
 
