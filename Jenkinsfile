@@ -5,7 +5,7 @@ agent any
       steps {
         script{
           try {
-        sshPublisher(continueOnError: false, failOnError: true,
+        sshPublisher(continueOnError: true, failOnError: false,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
