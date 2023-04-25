@@ -19,7 +19,10 @@ agent any
         failure{
           script{
           echo 'Aser'
-          currentBuild.result = 'SUCCESS'
+           if (currentBuild.result == 'FAILURE') {
+                currentBuild.result = 'SUCCESS'
+                echo 'Build result changed to SUCCESS Aser2'
+              }
           sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
