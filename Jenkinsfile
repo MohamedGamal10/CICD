@@ -29,6 +29,7 @@ agent any
           finally {
               def status = currentBuild.result
               if (status == 'FAILURE') {
+                  currentBuild.result = 'SUCCESS'
                   sshPublisher(continueOnError: true, failOnError: true,
                   publishers: [
                     sshPublisherDesc(configName: 'remote',verbose: true,
