@@ -3,11 +3,12 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
-        script{
+
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
+                script{
                 try{
                 sshTransfer(execCommand: "docker stop app"),
                 sshTransfer(execCommand: "docker rm app",),
@@ -17,10 +18,10 @@ agent any
                 catch(Exception e){
                   sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0")
 
-                }
+                }}
               ])
           ])
-          }
+          
           
       }
       post{
