@@ -29,12 +29,16 @@ agent any
           finally {
               def status = currentBuild.result
               if (status == 'FAILURE') {
-                // Handle the error
-                echo "SSH transfer failed for Publish over SSH 1"
-              } else {
-                // Handle success case
-                echo "SSH transfer successful for Publish over SSH 1"
-              }
+                  sshPublisher(continueOnError: true, failOnError: true,
+                  publishers: [
+                    sshPublisherDesc(configName: 'remote',verbose: true,
+                      transfers: [
+                        sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
+                      ])
+            ])
+
+               
+              } 
             }
           }
           
