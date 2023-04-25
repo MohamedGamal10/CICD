@@ -5,7 +5,7 @@ agent any
       steps {
         script{
           try {
-        sshPublisher(continueOnError: true, failOnError: false,
+        sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
@@ -16,14 +16,21 @@ agent any
               ])
           ])
           }catch (Exception e) {
-             echo 'Aser'
-            sshPublisher(continueOnError: true, failOnError: true,
-            publishers: [
+            try{
+              script{
+              echo 'Aser1'
+              sshPublisher(continueOnError: true, failOnError: true,
+              publishers: [
               sshPublisherDesc(configName: 'remote',verbose: true,
                 transfers: [
                   sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
                 ])
             ])
+
+              }
+            
+            }catch{echo 'Aser2'}
+             
 
           }
           }
