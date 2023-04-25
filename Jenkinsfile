@@ -16,21 +16,14 @@ agent any
               ])
           ])
           }catch (Exception e) {
-            try{
-              script{
-              echo 'Aser1'
-              sshPublisher(continueOnError: true, failOnError: true,
-              publishers: [
+             echo 'Aser'
+            sshPublisher(continueOnError: true, failOnError: true,
+            publishers: [
               sshPublisherDesc(configName: 'remote',verbose: true,
                 transfers: [
                   sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
                 ])
             ])
-
-              }
-            
-            }catch{echo 'Aser2'}
-             
 
           }
           }
@@ -39,6 +32,8 @@ agent any
     }
     stage('Docker Run Container') {
       steps {
+        script{
+          try{
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
@@ -48,6 +43,10 @@ agent any
             )
           ]
         )
+        }catch(Exception e){
+          echo "hhh"
+        }
+        }
       }
     }
   }
