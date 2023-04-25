@@ -26,14 +26,23 @@ agent any
             ])
 
           }
+          finally {
+              def status = currentBuild.result
+              if (status == 'FAILURE') {
+                // Handle the error
+                echo "SSH transfer failed for Publish over SSH 1"
+              } else {
+                // Handle success case
+                echo "SSH transfer successful for Publish over SSH 1"
+              }
+            }
           }
           
       }
+
     }
     stage('Docker Run Container') {
       steps {
-        script{
-          try{
         sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
@@ -43,10 +52,6 @@ agent any
             )
           ]
         )
-        }catch(Exception e){
-          echo "hhh"
-        }
-        }
       }
     }
   }
