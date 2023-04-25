@@ -3,7 +3,9 @@ agent any
   stages {
     stage('Build Docker image') {
       steps {
-        sshPublisher(continueOnError: true, failOnError: true,
+        script{
+          try {
+        sshPublisher(
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
@@ -13,30 +15,24 @@ agent any
                 sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
               ])
           ])
-          
-      }
-      post{
-        failure{
-          script{
-          echo 'Aser'
-           if (currentBuild.result == 'FAILURE') {
-                currentBuild.result = 'SUCCESS'
-                echo 'Build result changed to SUCCESS Aser2'
-              }
-          sshPublisher(continueOnError: true, failOnError: true,
-          publishers: [
-            sshPublisherDesc(configName: 'remote',verbose: true,
-              transfers: [
-                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
-              ])
-          ])
+          }catch (Exception e) {
+             echo 'Aser'
+            sshPublisher(
+            publishers: [
+              sshPublisherDesc(configName: 'remote',verbose: true,
+                transfers: [
+                  sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
+                ])
+            ])
 
-        }}
+          }
+          }
+          
       }
     }
     stage('Docker Run Container') {
       steps {
-        sshPublisher(continueOnError: true, failOnError: true,
+        sshPublisher(
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
