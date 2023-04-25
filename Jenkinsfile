@@ -5,7 +5,7 @@ agent any
       steps {
         script{
           try {
-        sshPublisher(
+        sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
@@ -17,7 +17,7 @@ agent any
           ])
           }catch (Exception e) {
              echo 'Aser'
-            sshPublisher(
+            sshPublisher(continueOnError: true, failOnError: true,
             publishers: [
               sshPublisherDesc(configName: 'remote',verbose: true,
                 transfers: [
@@ -32,7 +32,7 @@ agent any
     }
     stage('Docker Run Container') {
       steps {
-        sshPublisher(
+        sshPublisher(continueOnError: true, failOnError: true,
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
