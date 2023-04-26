@@ -1,6 +1,22 @@
 pipeline {
 agent any
   stages {
+    stage('Retrieve Version') {
+      steps {
+        script {
+          def gitUrl = 'https://github.com/MohamedGamal10/CICD.git'
+          def branch = 'main'
+          def packageJsonPath = 'package.json'
+          def packageJsonUrl = "${gitUrl}/raw/${branch}/${packageJsonPath}"
+          
+          def packageJson = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
+          def version = sh(returnStdout: true, script: "echo ${packageJson} | jq -r '.version'")
+          
+          echo "Package version is ${version}"
+        }
+      }
+    }
+
     stage('Clean Old Docker image') {
       steps {
         sshPublisher(continueOnError: true,
@@ -9,13 +25,12 @@ agent any
               transfers: [
                 sshTransfer(execCommand: "docker stop app"),
                 sshTransfer(execCommand: "docker rm app",),
-                sshTransfer(execCommand: "docker rmi react_app:1.0"),
               ])
           ]) 
       }
     }
 
-      stage('Build Docker image') {
+    stage('Build Docker image') {
       steps {
         sshPublisher(continueOnError: true,
           publishers: [
