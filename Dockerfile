@@ -7,10 +7,10 @@ WORKDIR /app
 EXPOSE 3000
 
 # install and cache app dependencies
-RUN npm version major
 COPY package.json package-lock.json ./
 #COPY package.json /app/package.json
 
+RUN npm version major
 RUN npm install
 
 # add app
