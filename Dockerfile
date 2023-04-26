@@ -10,7 +10,6 @@ EXPOSE 3000
 COPY package.json package-lock.json ./
 #COPY package.json /app/package.json
 
-RUN npm version major
 RUN npm install
 
 # add app
