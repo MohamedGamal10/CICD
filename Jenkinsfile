@@ -21,9 +21,7 @@ agent any
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
-                sshTransfer(execCommand: "git clone https://github.com/MohamedGamal10/CICD.git"),
-                sshTransfer(execCommand: "cd /root/CICD"),
-                sshTransfer(execCommand: "docker build --name react_app --tag 1.0 ."),
+                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:1.0"),
               ])
           ])  
       }
