@@ -7,7 +7,7 @@ agent any
           def gitUrl = 'https://github.com/MohamedGamal10/CICD.git'
           def branch = 'main'
           def packageJsonPath = 'package.json'
-          def packageJsonUrl = "${gitUrl}/raw/${branch}/${packageJsonPath}"
+          def packageJsonUrl = "${gitUrl}/blob/${branch}/${packageJsonPath}"
           
           def packageJson = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
           def version = sh(returnStdout: true, script: "echo ${packageJson} | jq -r '.version'")
