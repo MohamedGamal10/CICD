@@ -8,7 +8,7 @@ agent any
           def branch = 'main'
           def packageJsonPath = 'package.json'
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
-          def packageJson = sh(returnStdout: true, script: "cat -s ${packageJsonUrl}")
+          def packageJson = sh(returnStdout: true, script: "cat ${packageJsonUrl}")
           def version = sh (
             script: "cat '${packageJson}' | jq -r '.version'",
             returnStdout: true
