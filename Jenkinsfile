@@ -10,7 +10,7 @@ agent any
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
           def packageJsonStr = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
           def packageJson = new groovy.json.JsonSlurperClassic().parseText(packageJsonStr)
-           env.version = packageJson.version
+          env.version = packageJson.version
         }
       }
     }
