@@ -8,8 +8,8 @@ agent any
           def branch = 'main'
           def packageJsonPath = 'package.json'
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
-          def packageJson = readJSON url: sh"curl -s ${packageJsonUrl}"
-          echo packageJson
+          def packageJson = readJSON url: sh "curl -s ${packageJsonUrl}"
+          echo sh "curl -s ${packageJsonUrl}"
           def version = packageJson.version
           echo "Package version is ${version}"
         }
