@@ -10,7 +10,7 @@ agent any
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
           def packageJsonStr = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
           def packageJson = new groovy.json.JsonSlurperClassic().parseText(packageJsonStr)
-          def version = packageJson.version
+           env.version = packageJson.version
         }
       }
     }
@@ -34,7 +34,7 @@ agent any
           publishers: [
             sshPublisherDesc(configName: 'remote',verbose: true,
               transfers: [
-                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:${version}"),
+                sshTransfer(execCommand: "docker build https://github.com/MohamedGamal10/CICD.git#main -t react_app:${env.version}"),
               ])
           ])  
       }
