@@ -10,6 +10,7 @@ agent any
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
           //def packageJsonfile = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
           def packageJson = readJSON url: "https://raw.githubusercontent.com/MohamedGamal10/CICD/main/package.json"
+          echo "${packageJson}"
           def version = packageJson.version
           echo "Package version is ${version}"
         }
