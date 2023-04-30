@@ -4,7 +4,7 @@ agent any
     stage('Retrieve Version') {
       steps {
         script {
-          def gitUrl = 'https://raw.githubusercontent.com/MohamedGamal10/CICD/'
+          def gitUrl = 'https://raw.githubusercontent.com/MohamedGamal10/CICD'
           def branch = 'main'
           def packageJsonPath = 'package.json'
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
