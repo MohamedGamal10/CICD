@@ -9,7 +9,7 @@ agent any
           def packageJsonPath = 'package.json'
           def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
           def packageJsonStr = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
-          def packageJson = readJSON text: packageJsonStr
+          def packageJson = new groovy.json.JsonSlurperClassic().parseText(packageJsonStr)
           def version = packageJson.version
           
           echo "The version number is ${version}"
