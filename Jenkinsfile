@@ -4,10 +4,10 @@ agent any
     stage('Retrieve Version') {
       steps {
         script {
-          def gitUrl = 'https://github.com/MohamedGamal10/CICD'
+          def gitUrl = 'https://raw.githubusercontent.com/MohamedGamal10/CICD/'
           def branch = 'main'
           def packageJsonPath = 'package.json'
-          def packageJsonUrl = "${gitUrl}/blob/${branch}/${packageJsonPath}"
+          def packageJsonUrl = "${gitUrl}/${branch}/${packageJsonPath}"
           def packageJson = sh(returnStdout: true, script: "cat -s ${packageJsonUrl}")
           def version = sh (
             script: "cat '${packageJson}' | jq -r '.version'",
