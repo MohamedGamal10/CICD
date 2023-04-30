@@ -8,6 +8,7 @@ agent any
           def branch = 'main'
           def packageJsonPath = 'package.json'
           def packageJsonUrl = "${gitUrl}/blob/${branch}/${packageJsonPath}"
+          echo "${packageJsonUrl}"
           
           def packageJson = sh(returnStdout: true, script: "curl -s ${packageJsonUrl}")
           def version = sh(returnStdout: true, script: "echo ${packageJson} | jq -r '.version'")
